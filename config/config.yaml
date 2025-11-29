@@ -1,0 +1,60 @@
+# Deadline Collector Configuration
+
+# Database settings
+database:
+  path: "articles.db"
+
+# Logging configuration
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  directory: "logs"
+
+# Collection settings
+collection:
+  # RSS feeds to monitor
+  feeds:
+    - name: "Deadline"
+      url: "https://deadline.com/feed/"
+      domain: "deadline.com"
+
+    - name: "Variety"
+      url: "https://variety.com/feed/"
+      domain: "variety.com"
+
+    - name: "Hollywood Reporter"
+      url: "https://www.hollywoodreporter.com/feed/"
+      domain: "hollywoodreporter.com"
+
+  # Only collect articles from this year onwards
+  min_year: 2025
+
+  # Enable archive collection (Deadline only)
+  enable_archive_collection: true
+
+  # Deduplication similarity threshold (0.0 to 1.0)
+  # Higher = more strict (0.7 = 70% similar to be considered duplicate)
+  similarity_threshold: 0.7
+
+  # Rate limiting
+  delay_between_requests: 1.0  # seconds between article fetches
+  delay_between_feeds: 2.0     # seconds between different RSS feeds
+
+# Content extraction settings
+extraction:
+  user_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+  request_timeout: 10  # seconds
+  retry_attempts: 3
+  min_content_length: 200  # minimum characters for valid content
+
+# Export settings
+export:
+  directory: "exports"
+
+# Schedule configuration (for --schedule mode)
+schedule:
+  # Cron-like expression
+  # Supported patterns:
+  #   "0 * * * *"     - Every hour at :00
+  #   "*/30 * * * *"  - Every 30 minutes
+  #   "0 */2 * * *"   - Every 2 hours
+  cron: "0 * * * *"  # Default: every hour
